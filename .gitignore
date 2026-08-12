@@ -1,0 +1,21 @@
+node_modules/
+.next/
+out/
+build/
+
+# Generado por scripts/copiar-sw.mjs en cada dev/build.
+public/sw.js
+
+# Certificados de `next dev --experimental-https`.
+certificates/
+
+next-env.d.ts
+*.tsbuildinfo
+
+.env*
+!.env.example
+
+.DS_Store
+*.pem
+npm-debug.log*
+.vercel

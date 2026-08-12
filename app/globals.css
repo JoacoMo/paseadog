@@ -1,0 +1,58 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-verde: #1f7a4d;
+  --color-verde-oscuro: #17603c;
+  --color-verde-suave: #e8f3ed;
+  --color-tinta: #16211c;
+  --color-tinta-suave: #5d6b64;
+  --color-borde: #e2e8e4;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Alto de la barra de navegación inferior. Se usa también para el padding
+     del contenido, así nada queda tapado por la barra. */
+  --spacing-barra: 4rem;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  /* Evita que iOS agrande el texto al rotar el teléfono. */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: white;
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
+  /* Sin el flash gris al tocar botones en Android. */
+  -webkit-tap-highlight-color: transparent;
+  /* Sin "rebote" ni pull-to-refresh accidental dentro de la PWA. */
+  overscroll-behavior-y: none;
+}
+
+/* En modo standalone el usuario no tiene barra de navegador para volver atrás,
+   así que no queremos que pueda seleccionar texto de la interfaz por error al
+   mantener presionado. El contenido real (nombres, descripciones) sí se puede. */
+@media (display-mode: standalone) {
+  body {
+    user-select: none;
+  }
+
+  input,
+  textarea,
+  [data-seleccionable] {
+    user-select: text;
+  }
+}
+
+/* Foco visible y consistente, sin depender del default de cada navegador. */
+:focus-visible {
+  outline: 2px solid var(--color-verde);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
