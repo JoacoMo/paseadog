@@ -69,6 +69,16 @@ export function pedidoFalso(ruta, { metodo = 'GET', modo = 'no-cors' } = {}) {
   return { url: new URL(ruta, ORIGEN).href, method: metodo, mode: modo };
 }
 
+/**
+ * Una respuesta que llegó siguiendo una redirección (por ejemplo `/` → `/login`).
+ * `redirected` es de solo lectura en la Response real, así que se pisa a mano.
+ */
+export function respuestaRedirigida(cuerpo, opciones = {}) {
+  const respuesta = new Response(cuerpo, { status: 200, ...opciones });
+  Object.defineProperty(respuesta, 'redirected', { value: true, configurable: true });
+  return respuesta;
+}
+
 export function crearEntorno({ modo = 'produccion', version = 'prueba' } = {}) {
   const fuente = readFileSync(rutaFuente, 'utf8')
     .replace('__VERSION_CACHE__', `paseo-${version}`)

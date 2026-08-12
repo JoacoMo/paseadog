@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
+import { headers } from 'next/headers';
 import type { ReactNode } from 'react';
 
-import { NavegacionInferior } from '@/components/navegacion-inferior';
 import { RegistroServiceWorker } from '@/components/registro-service-worker';
 
 import './globals.css';
@@ -55,22 +55,18 @@ const guionCapturaInstalacion = `
 })();
 `;
 
-export default function LayoutRaiz({ children }: { readonly children: ReactNode }) {
+export default async function LayoutRaiz({ children }: { readonly children: ReactNode }) {
+  // El nonce lo genera el middleware, uno por request. Sin él, la CSP bloquea
+  // el script de abajo. Los scripts que arma Next se lo ponen solos.
+  const nonce = (await headers()).get('x-nonce') ?? undefined;
+
   return (
     <html lang="es-AR">
       <head>
-        <script dangerouslySetInnerHTML={{ __html: guionCapturaInstalacion }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: guionCapturaInstalacion }} />
       </head>
       <body className="antialiased">
-        <div className="mx-auto flex min-h-dvh w-full max-w-screen-sm flex-col">
-          {/* El padding de abajo reserva el alto de la barra + el área segura del
-              teléfono, para que el último elemento de cada pantalla no quede tapado. */}
-          <main className="flex-1 pb-[calc(var(--spacing-barra)_+_env(safe-area-inset-bottom))]">
-            {children}
-          </main>
-        </div>
-
-        <NavegacionInferior />
+        {children}
         <RegistroServiceWorker />
       </body>
     </html>

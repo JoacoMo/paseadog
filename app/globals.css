@@ -7,6 +7,8 @@
   --color-tinta: #16211c;
   --color-tinta-suave: #5d6b64;
   --color-borde: #e2e8e4;
+  /* Rojo de error. Contrasta 6.4:1 sobre blanco, arriba del mínimo AA. */
+  --color-error: #b3261e;
 
   --font-sans:
     ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -18,6 +20,15 @@
 
 :root {
   color-scheme: light;
+
+  /* Alto que una pantalla centrada tiene que descontar para quedar justo en el
+     medio de lo visible. Por defecto solo el área segura de abajo; en las
+     pantallas que llevan barra de navegación se le suma el alto de la barra. */
+  --alto-reservado: env(safe-area-inset-bottom);
+}
+
+.con-barra-inferior {
+  --alto-reservado: calc(var(--spacing-barra) + env(safe-area-inset-bottom));
 }
 
 html {

@@ -13,7 +13,8 @@ react-hook-form · MapLibre GL JS · Mercado Pago · Vercel.
 
 ```bash
 npm install
-npm run dev        # https://localhost:3000 (certificado autofirmado)
+cp .env.example .env.local   # y completá los dos valores de Supabase
+npm run dev                  # https://localhost:3000 (certificado autofirmado)
 ```
 
 `npm run dev` levanta con `--experimental-https` porque los service workers y la
@@ -32,6 +33,41 @@ molesta), usá `npm run dev:http`.
 | `npm test`           | Pruebas del service worker (`node --test`)      |
 | `npm run verificar`  | typecheck + tests, todo junto                   |
 | `npm run iconos`     | Regenera los PNG de `public/iconos/`            |
+| `npm run tipos`      | Regenera `lib/supabase/tipos-base.ts` desde la base |
+
+## Autenticación
+
+`proxy.ts` (lo que hasta Next 15 se llamaba `middleware.ts`) corre antes de cada
+request y hace dos cosas: refresca la sesión de Supabase y genera el nonce de la
+CSP.
+
+Las rutas viven en dos grupos:
+
+- `app/(app)/` — pide sesión. Sin ella, el proxy redirige a `/login?volver=…`.
+- `app/(auth)/` — login y registro. Si ya tenés sesión, te saca de ahí.
+
+`/offline` y `/auth/callback` quedan fuera de los dos: la primera la sirve el
+service worker cuando no hay red, y la segunda es adonde vuelve el link del mail.
+
+En el servidor siempre se usa `getUser()`, nunca `getSession()`: `getSession()`
+lee la cookie y confía en lo que dice, así que un token adulterado pasaría.
+`getUser()` lo valida contra Supabase.
+
+El proxy redirige, pero **no** es el control de acceso. El control de acceso es
+Row Level Security. Si el proxy tuviera un agujero, RLS sigue tapando.
+
+### Configurar el proyecto de Supabase
+
+1. **Authentication → URL Configuration**
+   - *Site URL*: la URL de producción.
+   - *Redirect URLs*: agregá `https://localhost:3000/auth/callback`, la de
+     producción y `https://*-tu-usuario.vercel.app/auth/callback` para los previews.
+2. **Authentication → Email Templates → Confirm signup**: que el link apunte a
+   `{{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=signup`.
+   La ruta también acepta el flujo con `code`, así que si dejás la plantilla por
+   defecto igual funciona.
+3. Para regenerar tipos, una vez: `npx supabase login` y
+   `npx supabase link --project-ref <tu-ref>`. Después alcanza con `npm run tipos`.
 
 ## El service worker
 

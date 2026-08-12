@@ -7,9 +7,10 @@ import type { ReactNode } from 'react';
  * tanto desde un componente de servidor (offline, not-found) como desde uno de
  * cliente (error.tsx, que sí tiene que serlo por el botón de reintentar).
  *
- * El alto descuenta la barra de navegación y el área segura del teléfono. Sin
- * ese descuento el contenido queda apenas más abajo del centro y la pantalla
- * scrollea unos píxeles en los teléfonos con notch.
+ * El alto descuenta `--alto-reservado`, que vale distinto según dónde se use:
+ * en las pantallas con barra de navegación incluye el alto de la barra, y en
+ * las de login solo el área segura del teléfono. Sin ese descuento el contenido
+ * queda apenas más abajo del centro y la pantalla scrollea unos píxeles.
  */
 export function PantallaMensaje({
   icono,
@@ -23,7 +24,7 @@ export function PantallaMensaje({
   readonly accion?: ReactNode;
 }) {
   return (
-    <div className="flex min-h-[calc(100dvh_-_var(--spacing-barra)_-_env(safe-area-inset-bottom))] flex-col items-center justify-center px-8 text-center">
+    <div className="flex min-h-[calc(100dvh_-_var(--alto-reservado))] flex-col items-center justify-center px-8 text-center">
       <div className="text-verde">{icono}</div>
 
       <h1 className="mt-5 text-xl font-semibold text-tinta">{titulo}</h1>
