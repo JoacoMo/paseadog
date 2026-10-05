@@ -1,37 +1,10 @@
 {
-  "name": "paseo",
+  "name": "dogwalkr",
   "version": "0.1.0",
   "private": true,
+  "description": "Marketplace para conectar dueños de perros con paseadores locales.",
   "type": "module",
-  "scripts": {
-    "dev": "node scripts/copiar-sw.mjs --desarrollo && next dev --experimental-https",
-    "dev:http": "node scripts/copiar-sw.mjs --desarrollo && next dev",
-    "build": "node scripts/copiar-sw.mjs && next build",
-    "start": "next start",
-    "typecheck": "tsc --noEmit",
-    "test": "node --test \"pruebas/*.prueba.mjs\"",
-    "verificar": "npm run typecheck && npm test",
-    "iconos": "node scripts/generar-iconos.mjs",
-    "tipos": "supabase gen types typescript --linked --schema public > lib/supabase/tipos-base.ts"
-  },
-  "dependencies": {
-    "@hookform/resolvers": "^5.7.1",
-    "@supabase/ssr": "^0.12.4",
-    "@supabase/supabase-js": "^2.112.3",
-    "next": "16.3.0",
-    "react": "19.2.8",
-    "react-dom": "19.2.8",
-    "react-hook-form": "^7.85.0",
-    "server-only": "^0.0.1",
-    "zod": "^4.4.3"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.3",
-    "@types/node": "^24.0.0",
-    "@types/react": "^19.2.0",
-    "@types/react-dom": "^19.2.0",
-    "supabase": "^2.113.0",
-    "tailwindcss": "^4.3.3",
-    "typescript": "^5.9.0"
+  "engines": {
+    "node": ">=22"
   }
 }

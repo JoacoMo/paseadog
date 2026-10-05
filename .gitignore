@@ -1,21 +1,27 @@
+# Dependencias y builds
 node_modules/
-.next/
-out/
-build/
-
-# Generado por scripts/copiar-sw.mjs en cada dev/build.
-public/sw.js
-
-# Certificados de `next dev --experimental-https`.
-certificates/
-
-next-env.d.ts
+dist/
+coverage/
 *.tsbuildinfo
 
-.env*
+# Variables de entorno: solo se commitean los .example
+.env
+.env.*
 !.env.example
 
+# Supabase CLI (estado local)
+supabase/.temp/
+supabase/.branches/
+
+# Editor / SO
 .DS_Store
-*.pem
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Logs
 npm-debug.log*
+*.log
+
+# Deploy
 .vercel

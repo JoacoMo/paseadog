@@ -1,10 +1,12 @@
-# Finales de línea LF en el repo, siempre. Se desarrolla en Windows y se
-# despliega en Linux; sin esto el mismo archivo tiene distinto contenido en cada
-# lado. Importa además porque scripts/copiar-sw.mjs saca la versión del cache de
-# un hash del service worker: con finales distintos, el hash cambia solo.
+# Finales de línea LF en el repo, siempre: se desarrolla en Windows y se
+# despliega en Linux. Sin esto el mismo archivo tiene distinto contenido en cada
+# lado y los diffs se llenan de ruido.
 * text=auto eol=lf
 
 # Binarios: que git no los toque.
 *.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
 *.ico binary
 *.pem binary
