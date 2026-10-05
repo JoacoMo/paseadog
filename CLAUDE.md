@@ -38,7 +38,7 @@ Si algo falla, se arregla; nunca se saltea ni se desactiva un test.
 8. **Componentes funcionales y hooks.** Componentes en PascalCase, hooks
    `useX.ts`, el resto en kebab-case. Estructura por feature
    (`src/features/<feature>/`), primitivas compartidas en `src/components/ui/`.
-9. Comentá el *por qué*, no el *qué*.
+9. Comentá el _por qué_, no el _qué_.
 
 ## Seguridad y privacidad (no negociables)
 

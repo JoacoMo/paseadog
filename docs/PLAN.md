@@ -8,21 +8,21 @@ cumple su DoD. Para pedirle trabajo a Claude Code alcanza con decir
 
 Estado: ✅ hecha · 🟡 en curso · ⬜ pendiente
 
-| Fase | Tema                                         | Estado |
-| ---- | -------------------------------------------- | ------ |
-| 1    | Init del monorepo                            | ✅     |
-| 2    | Base de datos y ORM (Sequelize + PostGIS)    | ⬜     |
-| 3    | API REST (CRUD + búsqueda geográfica)        | ⬜     |
-| 4    | Auth con Supabase (middleware JWT)           | ⬜     |
-| 5    | Frontend core (login, búsqueda, perfil)      | ⬜     |
-| 6    | Disponibilidad y reservas (únicas/recurrentes)| ⬜     |
-| 7    | Chat y notificaciones                        | ⬜     |
-| 8    | Paseo en vivo + Walk Report                  | ⬜     |
-| 9    | Reseñas y reputación                         | ⬜     |
-| 10   | Pagos con Mercado Pago                       | ⬜     |
-| 11   | Confianza, seguridad y panel admin           | ⬜     |
-| 12   | Calidad, observabilidad y deploy             | ⬜     |
-| 13   | (Opcional) App nativa con Expo               | ⬜     |
+| Fase | Tema                                           | Estado |
+| ---- | ---------------------------------------------- | ------ |
+| 1    | Init del monorepo                              | ✅     |
+| 2    | Base de datos y ORM (Sequelize + PostGIS)      | ⬜     |
+| 3    | API REST (CRUD + búsqueda geográfica)          | ⬜     |
+| 4    | Auth con Supabase (middleware JWT)             | ⬜     |
+| 5    | Frontend core (login, búsqueda, perfil)        | ⬜     |
+| 6    | Disponibilidad y reservas (únicas/recurrentes) | ⬜     |
+| 7    | Chat y notificaciones                          | ⬜     |
+| 8    | Paseo en vivo + Walk Report                    | ⬜     |
+| 9    | Reseñas y reputación                           | ⬜     |
+| 10   | Pagos con Mercado Pago                         | ⬜     |
+| 11   | Confianza, seguridad y panel admin             | ⬜     |
+| 12   | Calidad, observabilidad y deploy               | ⬜     |
+| 13   | (Opcional) App nativa con Expo                 | ⬜     |
 
 > **Recomendación de orden:** hacer la Fase 4 (auth) antes que la 3. Casi todos
 > los endpoints de la Fase 3 necesitan saber quién es el usuario ("mis perros",
@@ -91,15 +91,15 @@ lados) y `npm run dev` levanta ambos con el proxy funcionando.
 El modelo del brief original se respeta, con estas mejoras (cada una evita un
 problema concreto más adelante):
 
-| Brief original                  | Propuesta                                                     | Por qué |
-| ------------------------------- | ------------------------------------------------------------- | ------- |
-| `Users.role`                    | `is_owner`, `is_walker`, `is_admin` (booleanos)               | Una cuenta puede ser dueño y paseador a la vez; un único `role` no lo representa. |
-| `Bookings.dog_ids` (array)      | Tabla puente `booking_dogs (booking_id, dog_id)`              | Un array no tiene claves foráneas: se puede reservar con un perro borrado o ajeno. |
-| `hourly_rate` / `total_price`   | Enteros en centavos (`*_cents`) + `currency` (`ARS`)          | Los decimales binarios redondean mal la plata. |
-| `Users.location (lat/lon)`      | `geography(Point, 4326)` + índice GIST                        | Búsqueda por radio con `ST_DWithin` usando índice, en metros reales. |
-| `WalkLogs.walk_photos` (array)  | Tabla `walk_photos` con `storage_path`                        | Permite orden, borrado y URLs firmadas por foto. |
-| Tablas `Users`, `WalkerProfiles`| `users`, `walker_profiles` (snake_case) en esquema `app`      | Convención de Postgres; ver nota de seguridad arriba. |
-| Estados de reserva (4)          | `pending, accepted, rejected, cancelled, in_progress, completed, expired` | Hacen falta para cancelar, rechazar y vencer solicitudes sin respuesta. |
+| Brief original                   | Propuesta                                                                 | Por qué                                                                            |
+| -------------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `Users.role`                     | `is_owner`, `is_walker`, `is_admin` (booleanos)                           | Una cuenta puede ser dueño y paseador a la vez; un único `role` no lo representa.  |
+| `Bookings.dog_ids` (array)       | Tabla puente `booking_dogs (booking_id, dog_id)`                          | Un array no tiene claves foráneas: se puede reservar con un perro borrado o ajeno. |
+| `hourly_rate` / `total_price`    | Enteros en centavos (`*_cents`) + `currency` (`ARS`)                      | Los decimales binarios redondean mal la plata.                                     |
+| `Users.location (lat/lon)`       | `geography(Point, 4326)` + índice GIST                                    | Búsqueda por radio con `ST_DWithin` usando índice, en metros reales.               |
+| `WalkLogs.walk_photos` (array)   | Tabla `walk_photos` con `storage_path`                                    | Permite orden, borrado y URLs firmadas por foto.                                   |
+| Tablas `Users`, `WalkerProfiles` | `users`, `walker_profiles` (snake_case) en esquema `app`                  | Convención de Postgres; ver nota de seguridad arriba.                              |
+| Estados de reserva (4)           | `pending, accepted, rejected, cancelled, in_progress, completed, expired` | Hacen falta para cancelar, rechazar y vencer solicitudes sin respuesta.            |
 
 ### Modelo propuesto
 
@@ -127,7 +127,7 @@ problema concreto más adelante):
   `end_time timestamptz`, `total_price_cents`, `currency`, `notes`,
   `series_id` (reservas recurrentes), `cancelled_by`, `cancel_reason`,
   `accepted_at`, `started_at`, `completed_at`. Restricciones: `end_time >
-  start_time`; **constraint de exclusión** (`btree_gist` + `tstzrange`) que
+start_time`; **constraint de exclusión** (`btree_gist` + `tstzrange`) que
   impide dos reservas aceptadas/en curso superpuestas para el mismo paseador.
 - **booking_dogs** — `(booking_id, dog_id)` PK compuesta.
 - **walk_logs** (1:1 con bookings) — `route geography(LineString)`,
@@ -173,7 +173,7 @@ errores de la Fase 1.
 - **Perfil de paseador:** `PUT /me/walker-profile` (crea o actualiza y marca
   `is_walker`), galería y disponibilidad.
 - **Búsqueda:** `GET /walkers/search?lat&lon&radiusKm&minPrice&maxPrice&
-  minExperience&size&isTrainer&day&from&to&sort=distance|rating|price&cursor`.
+minExperience&size&isTrainer&day&from&to&sort=distance|rating|price&cursor`.
   SQL con `ST_DWithin` (usa índice) + `ST_Distance` para ordenar. La respuesta
   trae `distanceM` **redondeada a 100 m**, nunca coordenadas. Filtra por
   disponibilidad cruzando `walker_availability` y reservas existentes.
@@ -229,7 +229,7 @@ audiencia incorrecta, sin header) — sin depender de la red.
   semanas"), con regla RRULE expandida a reservas individuales.
 - Máquina de estados explícita y testeada:
   `pending → accepted | rejected | expired`, `accepted → in_progress |
-  cancelled`, `in_progress → completed`. Transiciones solo por endpoints
+cancelled`, `in_progress → completed`. Transiciones solo por endpoints
   dedicados (`POST /bookings/:id/accept`, etc.), nunca con un PATCH libre.
 - Vencimiento automático de solicitudes sin respuesta (job cada 5 min).
 - Política de cancelación (gratis hasta X horas antes) y reprogramación.

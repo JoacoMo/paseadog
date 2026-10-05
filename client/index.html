@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- viewport-fit=cover lets content reach under the notch; env(safe-area-inset-*) pads it back. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>DogWalkr</title>
+    <meta
+      name="description"
+      content="Encontrá paseadores de perros de confianza cerca tuyo, reservá un paseo y enterate cómo le fue a tu perro."
+    />
+    <meta name="theme-color" content="#1f7a4d" />
+    <meta name="color-scheme" content="light" />
+    <!-- Stops iOS from turning numbers (prices, dog weights) into phone links. -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-title" content="DogWalkr" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/favicon.ico" sizes="64x64" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon-180.png" />
+  </head>
+  <body>
+    <noscript>Para usar DogWalkr necesitás activar JavaScript en tu navegador.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

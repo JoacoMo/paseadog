@@ -1,0 +1,56 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-brand: #1f7a4d;
+  --color-brand-dark: #17603c;
+  --color-brand-soft: #e8f3ed;
+  --color-ink: #16211c;
+  --color-ink-soft: #5d6b64;
+  --color-border: #e2e8e4;
+  /* 6.4:1 on white, above the WCAG AA minimum for body text. */
+  --color-danger: #b3261e;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+@layer base {
+  :root {
+    /* Light only for now: form controls and scrollbars must not flip to dark. */
+    color-scheme: light;
+  }
+
+  html {
+    /* Stops iOS from enlarging text when the phone rotates. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: white;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    /* No grey flash when tapping buttons on Android. */
+    -webkit-tap-highlight-color: transparent;
+    /* No bounce or accidental pull-to-refresh inside the installed PWA. */
+    overscroll-behavior-y: none;
+  }
+
+  /* With viewport-fit=cover the page runs under the notch and home indicator;
+     these insets push content back into the visible area (0 elsewhere).
+     Preflight's border-box keeps the padding inside the 100dvh. */
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+      env(safe-area-inset-left);
+  }
+
+  /* Consistent, brand-colored focus ring regardless of browser defaults. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+}

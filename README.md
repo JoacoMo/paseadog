@@ -9,14 +9,14 @@ seguridad, privacidad) están en [`CLAUDE.md`](CLAUDE.md).
 
 ## Stack
 
-| Capa       | Tecnología                                                        |
-| ---------- | ----------------------------------------------------------------- |
-| Cliente    | React 19 · Vite 8 · Tailwind CSS 4 · TypeScript                   |
-| API        | Node 22 · Express 5 · TypeScript (ESM) · zod · pino               |
-| Base       | PostgreSQL + PostGIS · Sequelize (Fase 2)                         |
-| Plataforma | Supabase: Auth, Storage, Realtime                                 |
-| Tests      | Vitest · Supertest · Testing Library                              |
-| Deploy     | Vercel (cliente) · Render / Railway / Fly.io (API)                |
+| Capa       | Tecnología                                          |
+| ---------- | --------------------------------------------------- |
+| Cliente    | React 19 · Vite 8 · Tailwind CSS 4 · TypeScript     |
+| API        | Node 22 · Express 5 · TypeScript (ESM) · zod · pino |
+| Base       | PostgreSQL + PostGIS · Sequelize (Fase 2)           |
+| Plataforma | Supabase: Auth, Storage, Realtime                   |
+| Tests      | Vitest · Supertest · Testing Library                |
+| Deploy     | Vercel (cliente) · Render / Railway / Fly.io (API)  |
 
 ## Estructura
 
@@ -55,17 +55,17 @@ que el cliente no necesita CORS ni URLs absolutas.
 
 ## Comandos (desde la raíz)
 
-| Comando                | Qué hace                                                   |
-| ---------------------- | ---------------------------------------------------------- |
-| `npm run dev`          | API y cliente juntos, con recarga en caliente              |
-| `npm run dev:server`   | Solo la API                                                |
-| `npm run dev:client`   | Solo el cliente                                            |
-| `npm run build`        | Build de producción de los dos                             |
-| `npm run test`         | Tests de los dos                                           |
-| `npm run lint`         | ESLint de los dos                                          |
-| `npm run typecheck`    | `tsc` de los dos                                           |
-| `npm run format`       | Prettier sobre todo el repo                                |
-| `npm run verify`       | Formato + lint + tipos + tests + build: lo mismo que la CI |
+| Comando              | Qué hace                                                   |
+| -------------------- | ---------------------------------------------------------- |
+| `npm run dev`        | API y cliente juntos, con recarga en caliente              |
+| `npm run dev:server` | Solo la API                                                |
+| `npm run dev:client` | Solo el cliente                                            |
+| `npm run build`      | Build de producción de los dos                             |
+| `npm run test`       | Tests de los dos                                           |
+| `npm run lint`       | ESLint de los dos                                          |
+| `npm run typecheck`  | `tsc` de los dos                                           |
+| `npm run format`     | Prettier sobre todo el repo                                |
+| `npm run verify`     | Formato + lint + tipos + tests + build: lo mismo que la CI |
 
 Para un solo lado: `npm run <script> -w server` o `-w client`.
 
@@ -73,9 +73,9 @@ Para un solo lado: `npm run <script> -w server` o `-w client`.
 
 Base: `/api/v1`.
 
-| Método | Ruta      | Descripción                     |
-| ------ | --------- | ------------------------------- |
-| GET    | `/health` | Estado del servicio y versión   |
+| Método | Ruta      | Descripción                   |
+| ------ | --------- | ----------------------------- |
+| GET    | `/health` | Estado del servicio y versión |
 
 Todos los errores responden con la misma forma:
 
